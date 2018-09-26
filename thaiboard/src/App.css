@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  border: 1px solid black;
+  margin: 0 auto;
+  width: 800px;
+}
+
+.letters {
+  border: 1px solid black;
+  background-color: lightgreen;
+}
+
+.special {
+  border: 1px solid black;
+  background-color: lightblue;
+}
+
+.special-right {
+  grid-column: 11/13;
+  border: 1px solid black;
+  background-color: lightblue;
+}
+
+.special-left {
+  grid-column: 1/3;
+  border: 1px solid black;
+  background-color: lightblue;
+}
