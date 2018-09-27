@@ -13,8 +13,8 @@ class Key extends React.Component<IKeyProps> {
 
     public render() {
         return (
-            <div>
-                <p>Representerar en key</p>
+            <div className={this.props.type} data-value={this.props.value}>
+                {this.props.value}
             </div>
         )
     }
