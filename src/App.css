@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Lora');
 @import url('https://fonts.googleapis.com/css?family=Dosis|K2D|Roboto+Condensed');
 
 .App {
@@ -7,7 +7,7 @@
 }
 
 h1 {
-  font-family: 'K2D', sans-serif;
+  font-family: 'Lora', serif;
 }
 
 h3 {
@@ -15,10 +15,8 @@ h3 {
   opacity: 0.8;
 }
 
-#copy-button {
-  position: absolute;
-  top: 270px;
-  margin: 5px;
+.action-button {
+  
 }
 
 .Footer {
@@ -39,7 +37,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(60, 8px);
   grid-gap: 10px;
-  padding: 16px 7px 7px 7px;
+  padding: 7px 7px 7px 7px;
   background-color: #212a44;
   border-radius: 2px;
   box-shadow: 
@@ -58,10 +56,13 @@ h3 {
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 35px;
-  background-color: #535f83;
+  height: 45px;
+  background-color: #5e6c96;
   border-radius: 2px;
   transition: opacity 0.3s boxShadow 0.5s;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
 }
 
 .key:hover {
@@ -70,45 +71,41 @@ h3 {
 }
 
 .letter {
-  background-color: #7c85a1;
+  background-color: #a0accf;
   font-size: 24px;
 }
 
+/* CTRL and ALT key */
 .keyboard__key--1-25u {
   grid-column: span 5;
 }
 
-/* 1.5u key */
+/* Tab and app key */
 .keyboard__key--1-5u {
   grid-column: span 6;
 }
 
-/* 1.75u key */
+/* Caps Lock */
 .keyboard__key--1-75u {
   grid-column: span 7;
 }
 
-/* 2u key */
+/* Backspace */
 .keyboard__key--2u {
   grid-column: span 8;
 }
 
-/* 2.25u key */
+/* Enter and Shift key */
 .keyboard__key--2-25u {
   grid-column: span 9;
 }
 
-/* 2.5u key */
-.keyboard__key--2-5u {
-  grid-column: span 10;
-}
-
-/* 2.75u key */
+/* Special shift key */
 .keyboard__key--2-75u {
   grid-column: span 11;
 }
 
-/* 6.25u space key */
+/* Space */
 .keyboard__key--6-25u {
   grid-column: span 25;
 }
@@ -122,6 +119,7 @@ h3 {
   border-radius: 5px;
   box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.3);
   transition: opacity 0.2s;
+  background-color: ghostwhite;
 }
 
 .not-focused-text-field {
@@ -138,4 +136,8 @@ h3 {
 
 #input-text-field:hover {
   opacity: 1;
+}
+
+.active {
+  background-color: #a0accf;
 }

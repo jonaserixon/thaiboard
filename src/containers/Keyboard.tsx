@@ -3,6 +3,7 @@ import * as React from 'react';
 import Key from '../components/Key';
 
 interface IKeyboardState {
+    copyMessage: string,
     input: string,
     isCapsLock: boolean,
     isShift: boolean,
@@ -15,6 +16,7 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
         super(props);
 
         this.state = {
+            copyMessage: '',
             input: '',
             isCapsLock: false,
             isShift: false,
@@ -38,7 +40,14 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
         return (
             <div>
                 <textarea id='input-text-field' className={this.state.textFieldClass} value={this.state.input} onChange={this.handleOnChange} placeholder='Write something interesting...'/>
-                <Button variant="contained" color="primary" id='copy-button' >Copy</Button>
+                    <Button variant="contained" className='action-button' color="primary" onClick={this.handleOnClickCopy}>
+                        Copy
+                    </Button>
+                    <Button variant="contained" className='action-button' color="secondary" onClick={this.handleOnClickDelete}>
+                        Delete
+                    </Button>
+                    <p>{this.state.copyMessage}</p>
+                
                 <div className='grid-container' onClick={this.handleOnClick} >
                     {this.state.keyboard}
                 </div>
@@ -46,17 +55,27 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
         )
     }
 
+    private handleOnClickCopy = (): void => {
+        const text = document.querySelector('#input-text-field') as HTMLInputElement;
+        text.select();
+        document.execCommand('copy');
+        this.setState({copyMessage: 'Copied text input!'});
+        setTimeout(() => { 
+            this.setState({copyMessage: ''});
+        }, 3000);
+    }
+
+    private handleOnClickDelete = (event: any): void => {
+        this.setState({input: ''})
+    }
+
     private handleOnChange = (event: any): void => {
-        console.log(event);
-        
         this.setState({input: event.target.value})
     }
 
     private handleOnClick = (event: any): void => {
         if (event.target.dataset.value !== undefined) {
             const key = event.target.dataset.value;
-            console.log(key);
-
             switch (key) {
                 case 'CAPS LOCK':
                     this.setState({isCapsLock: !this.state.isCapsLock}, () => {
@@ -84,6 +103,12 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
                 case 'TAB':
                     this.setState({input: this.state.input + '    '});
                     break;
+                case 'CTRL':
+                    break;
+                case 'ALT':
+                    break;
+                case 'Thaiboard':
+                    break;
                 default:
                     if (this.state.isShift) {
                         this.setState({isShift: false}, () => {
@@ -104,7 +129,7 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
             {0: 'TAB', 1: 'ๆ', 2: 'ไ', 3: 'ำ', 4: 'พ', 5: 'ะ', 6: 'ั', 7: 'ี', 8: 'ร', 9: 'น', 10: 'ย', 11: 'บ', 12: 'ล', 13: 'ฃ'},
             {1: 'CAPS LOCK', 2: 'ฟ', 3: 'ห', 4: 'ก', 5: 'ด', 6: 'เ', 7: '้', 8: '่', 9: 'า', 10: 'ส', 11: 'ว', 12: 'ง', 13: 'ENTER'},
             {1: 'SHIFT', 2: 'ผ', 3: 'ป', 4: 'แ', 5: 'อ', 6: 'ิ', 7: 'ื', 8: 'ท', 9: 'ม', 10: 'ใ', 11: 'ฝ', 12: 'SHIFT_1'},
-            {1: 'CTRL', 2: 'ALT', 3: 'Thaiboard', 4: 'SPACE', 5: 'CTRL', 6: 'Thaiboard'}
+            {1: 'CTRL', 2: '  ', 3: 'Thaiboard', 4: 'SPACE', 5: '  ', 6: 'Thaiboard', 7: 'xx'}
         ];
 
         const keyCaps = [
@@ -112,7 +137,7 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
             {0: 'TAB', 1: '๐', 2: '"', 3: 'ฎ', 4: 'ฑ', 5: 'ธ', 6: 'ํ', 7: '๊', 8: 'ณ', 9: 'ฯ', 10: 'ญ', 11: 'ฐ', 12: ',', 13: 'ฅ'},
             {1: 'CAPS LOCK', 2: 'ฤ', 3: 'ฆ', 4: 'ฏ', 5: 'โ', 6: 'ฌ', 7: '็', 8: '๋', 9: 'ษ', 10: 'ศ', 11: 'ซ', 12: '.', 13: 'ENTER'},
             {1: 'SHIFT', 2: '(', 3: ')', 4: 'ฉ', 5: 'ฮ', 6: 'ฺ',7: '์', 8: '?', 9: 'ฒ', 10: 'ฬ', 11: 'ฦ', 12: 'SHIFT_1'},
-            {1: 'CTRL', 2: 'ALT', 3: 'Thaiboard', 4: 'SPACE', 5: 'CTRL', 6: 'Thaiboard'}
+            {1: 'CTRL', 2: '  ', 3: 'Thaiboard', 4: 'SPACE', 5: '  ', 6: 'Thaiboard', 7: 'xx'}
         ];
 
         if (this.state.isCapsLock || this.state.isShift) {
@@ -124,20 +149,19 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
 
     private mapKeys = (keys: object[]): object[] => {
         const keyboard: object[] = [];
-        console.log(keyboard);
         keys.forEach(row => {
             for (const value of Object.keys(row)) {
                 let key;
                 if (row[value].length > 1) {
                     switch (row[value]) {
                         case 'CAPS LOCK':
-                            key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--1-75u'}/>
+                            key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--1-75u ' + (this.state.isCapsLock ? 'active' : '')}/>
                             break;
                         case 'SHIFT':
-                            key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--2-25u'}/>
+                            key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--2-25u '  + (this.state.isShift ? 'active' : '')}/>
                             break;
                         case 'SHIFT_1':
-                            key = <Key key={row[value]} value={'SHIFT'} type={'key keyboard__key--2-75u'}/>
+                            key = <Key key={row[value]} value={'SHIFT'} type={'key keyboard__key--2-75u '  + (this.state.isShift ? 'active' : '')}/>
                             break;
                         case 'SPACE':
                             key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--6-25u'}/>
@@ -157,11 +181,14 @@ class Keyboard extends React.Component<{}, IKeyboardState> {
                         case 'CTRL':
                             key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--1-25u'}/>
                             break;
-                        case 'ALT':
-                            key = <Key key={row[value]} value={row[value]} type={'key keyboard__key--1-25u'}/>
+                        case '  ':
+                            key = <Key key={row[value]} value={''} type={'key keyboard__key--1-25u'}/>
                             break;
                         case 'Thaiboard':
                             key = <Key key={row[value]} value={'Thaiboard'} type={'key keyboard__key--1-5u'}/>
+                            break;
+                        case 'xx':
+                            key = <Key key={row[value]} value={''} type={'key keyboard__key--2u'}/>
                             break;
                         default:
                             break;

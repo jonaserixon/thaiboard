@@ -50,17 +50,8 @@ class Key extends React.Component<IKeyProps> {
                 case 'BACKSPACE':
                     return <KeyboardBackspace style={{ position: 'absolute', left: '5px' }}/>
                     break;
-                case 'ESC':
-                    return;
-                    break;
                 case 'TAB':
                     return <KeyboardTab style={{ position: 'absolute', left: '5px' }}/>
-                    break;
-                case 'CTRL':
-                    return;
-                    break;
-                case 'ALT':
-                    return;
                     break;
                 case 'Thaiboard':
                     return <Language />;

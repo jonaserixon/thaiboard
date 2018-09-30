@@ -1,10 +1,12 @@
 {
   "name": "thaiboard",
+  "homepage": "http://jonaserixon.github.io/thaiboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.1.2",
     "@material-ui/icons": "^3.0.1",
+    "gh-pages": "^1.2.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts-ts": "2.17.0"
@@ -13,7 +15,9 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
